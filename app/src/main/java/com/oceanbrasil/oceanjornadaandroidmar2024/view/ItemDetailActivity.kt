@@ -7,10 +7,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.google.android.material.chip.Chip
-import com.oceanbrasil.oceanjornadaandroidmar2024.model.api.ApiService
-import com.oceanbrasil.oceanjornadaandroidmar2024.model.domain.ItemDetail
 import com.oceanbrasil.oceanjornadaandroidmar2024.R
+import com.oceanbrasil.oceanjornadaandroidmar2024.model.api.ApiService
+import com.oceanbrasil.oceanjornadaandroidmar2024.model.domain.Item
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,38 +24,35 @@ class ItemDetailActivity : AppCompatActivity() {
         val id = intent.getIntExtra("ID", 0)
 
         if (id == 0) {
-            return finish()
+            finish()
+            return
         }
 
         Toast.makeText(this, "Carregar API para o ID $id", Toast.LENGTH_LONG).show()
 
+        // Apontamos o Retrofit para a nova API
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://ocean-api-itens.onrender.com/")
+            .baseUrl("https://rickandmortyapi.com/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         val apiService = retrofit.create(ApiService::class.java)
 
-        apiService.carregarItem(id).enqueue(object : Callback<ItemDetail> {
-            override fun onResponse(call: Call<ItemDetail>, response: Response<ItemDetail>) {
+        // A chamada agora busca por um único `Item`
+        apiService.carregarItem(id).enqueue(object : Callback<Item> {
+            override fun onResponse(call: Call<Item>, response: Response<Item>) {
                 response.body()?.let {
                     Log.d("API", it.toString())
 
                     val tvNome = findViewById<TextView>(R.id.tvNome)
                     val ivImagem = findViewById<ImageView>(R.id.ivImagem)
-                    val chipStatus = findViewById<Chip>(R.id.chipStatus)
-                    val chipEspecie = findViewById<Chip>(R.id.chipEspecie)
-                    val chipGenero = findViewById<Chip>(R.id.chipGenero)
 
                     tvNome.text = it.nome
                     Glide.with(ivImagem).load(it.imagem).into(ivImagem)
-                    chipStatus.text = "Status: ${it.status}"
-                    chipEspecie.text = "Espécie: ${it.especie}"
-                    chipGenero.text = "Gênero: ${it.genero}"
                 }
             }
 
-            override fun onFailure(call: Call<ItemDetail>, t: Throwable) {
+            override fun onFailure(call: Call<Item>, t: Throwable) {
                 Log.e("API", "Erro ao carregar dados da API.", t)
             }
         })

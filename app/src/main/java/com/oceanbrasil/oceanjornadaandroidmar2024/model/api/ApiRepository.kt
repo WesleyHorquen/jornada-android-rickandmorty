@@ -10,26 +10,34 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiRepository {
+    // A API do Rick and Morty aninha os resultados em um objeto "results".
+    // Esta classe de dados ajuda o Gson a parsear essa estrutura.
+    data class RickAndMortyResponse(val results: List<Item>)
+
     val itens = MutableLiveData<List<Item>>()
+
+    private val apiService: ApiService
 
     init {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://ocean-api-itens.onrender.com/")
+            .baseUrl("https://rickandmortyapi.com/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val apiService = retrofit.create(ApiService::class.java)
+        apiService = retrofit.create(ApiService::class.java)
+        fetchItems()
+    }
 
-        apiService.carregarItens().enqueue(object : Callback<Array<Item>> {
-            override fun onResponse(call: Call<Array<Item>>, response: Response<Array<Item>>) {
+    private fun fetchItems() {
+        apiService.carregarItens().enqueue(object : Callback<RickAndMortyResponse> {
+            override fun onResponse(call: Call<RickAndMortyResponse>, response: Response<RickAndMortyResponse>) {
                 response.body()?.let {
-                    Log.d("API", "Itens carregados com sucesso\n$it")
-
-                    itens.postValue(it.toList())
+                    Log.d("API", "Itens carregados com sucesso\n${it.results}")
+                    itens.postValue(it.results)
                 }
             }
 
-            override fun onFailure(call: Call<Array<Item>>, t: Throwable) {
+            override fun onFailure(call: Call<RickAndMortyResponse>, t: Throwable) {
                 Log.e("API", "Erro ao carregar dados da API.", t)
             }
         })
