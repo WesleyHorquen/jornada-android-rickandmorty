@@ -19,11 +19,31 @@ class MainActivity : AppCompatActivity() {
         // 1. Criar a lista de dados locais
         // Usando ícones padrão do Android para evitar a necessidade de imagens customizadas.
         val personagens = listOf(
-            Personagem("Rick Sanchez", android.R.drawable.ic_dialog_info),
-            Personagem("Morty Smith", android.R.drawable.ic_dialog_alert),
-            Personagem("Summer Smith", android.R.drawable.ic_dialog_dialer),
-            Personagem("Beth Smith", android.R.drawable.ic_dialog_email),
-            Personagem("Jerry Smith", android.R.drawable.ic_dialog_map)
+            Personagem(
+                nome = "Rick Sanchez",
+                imagem = android.R.drawable.ic_dialog_info,
+                description = "Descrição do Rick Sanchez"
+            ),
+            Personagem(
+                nome = "Morty Smith",
+                imagem = android.R.drawable.ic_dialog_alert,
+                description = "Descrição do Morty Smith"
+            ),
+            Personagem(
+                nome = "Summer Smith",
+                imagem = android.R.drawable.ic_dialog_dialer,
+                description = "Descrição do Summer Smith 23wqoieuqoiweuioqwehjioqwehioqwheoiqwhjiwqehriuqhweriuqgweriugqwkqweyrgqwgrqkygewruyqwgfguhdgfuqwgyuqgwerukygqwerwq"
+            ),
+            Personagem(
+                nome = "Beth Smith",
+                imagem = android.R.drawable.ic_dialog_email,
+                description = "Descrição do Beth Smith"
+            ),
+            Personagem(
+                nome = "Jerry Smith",
+                imagem = android.R.drawable.ic_dialog_map,
+                description = "Descrição do Jerry Smith"
+            )
         )
 
         // 2. Criar e configurar o adapter

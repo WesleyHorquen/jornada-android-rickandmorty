@@ -15,8 +15,11 @@ class ItemAdapter(val itens: List<Personagem>) : RecyclerView.Adapter<ItemAdapte
         fun bindView(item: Personagem) {
             val textView = itemView.findViewById<TextView>(R.id.textView)
             val imageView = itemView.findViewById<ImageView>(R.id.imageView)
+            val descriptionView = itemView.findViewById<TextView>(R.id.descriptionView)
 
             textView.text = item.nome
+            descriptionView.text = item.description
+
             // Glide funciona perfeitamente com IDs de drawable (Int)
             Glide.with(imageView).load(item.imagem).into(imageView)
         }
