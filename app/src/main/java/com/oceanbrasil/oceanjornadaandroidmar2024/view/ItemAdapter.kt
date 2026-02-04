@@ -1,6 +1,5 @@
 package com.oceanbrasil.oceanjornadaandroidmar2024.view
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,23 +7,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.oceanbrasil.oceanjornadaandroidmar2024.model.domain.Item
+import com.oceanbrasil.oceanjornadaandroidmar2024.model.domain.Personagem
 import com.oceanbrasil.oceanjornadaandroidmar2024.R
 
-class ItemAdapter(val itens: List<Item>) : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
+class ItemAdapter(val itens: List<Personagem>) : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindView(item: Item) {
+        fun bindView(item: Personagem) {
             val textView = itemView.findViewById<TextView>(R.id.textView)
             val imageView = itemView.findViewById<ImageView>(R.id.imageView)
 
             textView.text = item.nome
+            // Glide funciona perfeitamente com IDs de drawable (Int)
             Glide.with(imageView).load(item.imagem).into(imageView)
-
-            itemView.setOnClickListener {
-                val itemDetailIntent = Intent(itemView.context, ItemDetailActivity::class.java)
-                itemDetailIntent.putExtra("ID", item.id)
-                itemView.context.startActivity(itemDetailIntent)
-            }
         }
     }
 

@@ -2,11 +2,10 @@ package com.oceanbrasil.oceanjornadaandroidmar2024.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.oceanbrasil.oceanjornadaandroidmar2024.R
-import com.oceanbrasil.oceanjornadaandroidmar2024.viewmodel.ItemViewModel
+import com.oceanbrasil.oceanjornadaandroidmar2024.model.domain.Personagem
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,12 +16,17 @@ class MainActivity : AppCompatActivity() {
         val rvItens = findViewById<RecyclerView>(R.id.rvItens)
         rvItens.layoutManager = LinearLayoutManager(this)
 
-        // Exemplo com Grid de 2 colunas:
-        // rvItens.layoutManager = GridLayoutManager(this, 2)
+        // 1. Criar a lista de dados locais
+        // Usando ícones padrão do Android para evitar a necessidade de imagens customizadas.
+        val personagens = listOf(
+            Personagem("Rick Sanchez", android.R.drawable.ic_dialog_info),
+            Personagem("Morty Smith", android.R.drawable.ic_dialog_alert),
+            Personagem("Summer Smith", android.R.drawable.ic_dialog_dialer),
+            Personagem("Beth Smith", android.R.drawable.ic_dialog_email),
+            Personagem("Jerry Smith", android.R.drawable.ic_dialog_map)
+        )
 
-        val itemViewModel = ViewModelProvider(this)[ItemViewModel::class.java]
-        itemViewModel.itens.observe(this) {
-            rvItens.adapter = ItemAdapter(it)
-        }
+        // 2. Criar e configurar o adapter
+        rvItens.adapter = ItemAdapter(personagens)
     }
 }

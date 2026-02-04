@@ -10,7 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiRepository {
-    // A API do Rick and Morty aninha os resultados em um objeto "results".
+    // A API do Rick and Morty alinha os resultados em um objeto "results".
     // Esta classe de dados ajuda o Gson a parsear essa estrutura.
     data class RickAndMortyResponse(val results: List<Item>)
 
